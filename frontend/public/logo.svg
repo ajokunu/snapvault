@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <!-- Shadow layer (bottom) -->
+  <rect x="96" y="168" width="320" height="240" rx="24" fill="#1e1b4b" opacity="0.3" transform="translate(6, 6)"/>
+
+  <!-- Back paper layer -->
+  <rect x="80" y="140" width="352" height="260" rx="20" fill="#312e81"/>
+
+  <!-- Main vault body -->
+  <rect x="96" y="168" width="320" height="240" rx="24" fill="#4338ca"/>
+
+  <!-- Paper fold accent (top-right corner) -->
+  <path d="M392 168 L416 168 Q420 168 416 172 L416 196 Q416 192 412 192 L392 192 Q388 192 392 188 Z" fill="#6366f1" opacity="0.6"/>
+
+  <!-- Vault door circle (outer) -->
+  <circle cx="256" cy="288" r="88" fill="#312e81" opacity="0.5"/>
+  <circle cx="256" cy="288" r="80" fill="#1e1b4b"/>
+
+  <!-- Vault door inner circle -->
+  <circle cx="256" cy="288" r="64" fill="#3730a3"/>
+
+  <!-- Camera lens / vault dial -->
+  <circle cx="256" cy="288" r="40" fill="#4f46e5"/>
+  <circle cx="256" cy="288" r="24" fill="#818cf8"/>
+  <circle cx="256" cy="288" r="12" fill="#c7d2fe"/>
+
+  <!-- Lens highlight -->
+  <circle cx="246" cy="278" r="6" fill="white" opacity="0.4"/>
+
+  <!-- Vault handle spokes -->
+  <rect x="252" y="224" width="8" height="24" rx="4" fill="#a5b4fc" opacity="0.7"/>
+  <rect x="252" y="340" width="8" height="24" rx="4" fill="#a5b4fc" opacity="0.7"/>
+  <rect x="192" y="284" width="24" height="8" rx="4" fill="#a5b4fc" opacity="0.7"/>
+  <rect x="296" y="284" width="24" height="8" rx="4" fill="#a5b4fc" opacity="0.7"/>
+
+  <!-- Camera viewfinder bump (top) -->
+  <rect x="200" y="148" width="80" height="36" rx="10" fill="#4338ca"/>
+  <rect x="208" y="152" width="64" height="28" rx="8" fill="#4f46e5"/>
+
+  <!-- Paper texture lines -->
+  <line x1="120" y1="380" x2="200" y2="380" stroke="#6366f1" stroke-width="2" opacity="0.2" stroke-linecap="round"/>
+  <line x1="312" y1="380" x2="392" y2="380" stroke="#6366f1" stroke-width="2" opacity="0.2" stroke-linecap="round"/>
+  <line x1="120" y1="392" x2="172" y2="392" stroke="#6366f1" stroke-width="2" opacity="0.15" stroke-linecap="round"/>
+  <line x1="340" y1="392" x2="392" y2="392" stroke="#6366f1" stroke-width="2" opacity="0.15" stroke-linecap="round"/>
+
+  <!-- Lock indicator dot -->
+  <circle cx="380" cy="200" r="8" fill="#34d399"/>
+  <circle cx="380" cy="200" r="4" fill="#6ee7b7"/>
+</svg>
