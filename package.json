@@ -1,0 +1,11 @@
+{
+  "name": "snapvault",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Ultra-cheap personal photo/video cloud storage on AWS",
+  "workspaces": [
+    "infra",
+    "backend",
+    "frontend"
+  ]
+}
