@@ -4,6 +4,7 @@ import { StorageConstruct } from "./constructs/storage";
 import { DatabaseConstruct } from "./constructs/database";
 import { AuthConstruct } from "./constructs/auth";
 import { CdnConstruct } from "./constructs/cdn";
+import { ApiConstruct } from "./constructs/api";
 
 export class SnapVaultStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -14,6 +15,11 @@ export class SnapVaultStack extends cdk.Stack {
     const auth = new AuthConstruct(this, "Auth");
     const cdn = new CdnConstruct(this, "Cdn", {
       bucket: storage.bucket,
+    });
+    new ApiConstruct(this, "Api", {
+      bucket: storage.bucket,
+      table: database.table,
+      userPool: auth.userPool,
     });
 
     // Outputs for frontend configuration
