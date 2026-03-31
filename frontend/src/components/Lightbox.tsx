@@ -1,5 +1,6 @@
 import { useEffect, useCallback, useState, useRef } from "react";
 import { type PhotoItem } from "../services/api";
+import { ExifPanel } from "./ExifPanel";
 
 interface LightboxProps {
   photos: PhotoItem[];
@@ -15,6 +16,7 @@ export function Lightbox({
   onNavigate,
 }: LightboxProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [showExif, setShowExif] = useState(false);
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
 
   const photo = photos[currentIndex];
@@ -172,6 +174,33 @@ export function Lightbox({
             />
           </svg>
         </button>
+      )}
+
+      {/* Info toggle button */}
+      <button
+        onClick={() => setShowExif(!showExif)}
+        className={`absolute top-4 right-16 z-10 w-10 h-10 flex items-center justify-center rounded-full ${
+          showExif ? "bg-indigo-500" : "bg-white/10 hover:bg-white/20"
+        } text-white transition-colors cursor-pointer border-0`}
+      >
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+      </button>
+
+      {/* EXIF Panel */}
+      {showExif && (
+        <ExifPanel photo={photo} onClose={() => setShowExif(false)} />
       )}
 
       {/* Photo info bar */}
