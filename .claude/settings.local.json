@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.anthropic.com)",
+      "Bash(npx tsc:*)",
+      "Bash(npx cdk:*)"
+    ]
+  }
+}
