@@ -1,0 +1,17 @@
+{
+  "name": "SnapVault",
+  "short_name": "SnapVault",
+  "description": "Ultra-cheap personal photo & video cloud storage",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#6366f1",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

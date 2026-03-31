@@ -128,9 +128,14 @@ async function listPhotos(
   const result = await ddb.send(
     new QueryCommand({
       TableName: TABLE_NAME,
-      KeyConditionExpression: "userId = :uid AND begins_with(photoId, #pid)",
-      ExpressionAttributeNames: { "#pid": "" },
-      ExpressionAttributeValues: { ":uid": userId },
+      KeyConditionExpression: "userId = :uid",
+      FilterExpression: "NOT begins_with(photoId, :albumPrefix) AND #status = :ready",
+      ExpressionAttributeNames: { "#status": "status" },
+      ExpressionAttributeValues: {
+        ":uid": userId,
+        ":albumPrefix": "ALBUM#",
+        ":ready": "ready",
+      },
       ScanIndexForward: false, // newest first (ULID sorts chronologically)
       Limit: limit,
       ExclusiveStartKey: exclusiveStartKey,
