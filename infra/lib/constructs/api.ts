@@ -139,10 +139,75 @@ export class ApiConstruct extends Construct {
       { prefix: "originals/" }
     );
 
+    // --- Gallery API Lambda ---
+    const getGalleryFunction = new nodejs.NodejsFunction(
+      this,
+      "GetGallery",
+      {
+        ...sharedLambdaProps,
+        functionName: "snapvault-get-gallery",
+        entry: path.join(backendRoot, "src", "get-gallery", "index.ts"),
+        handler: "handler",
+        description: "Lists photos and returns photo metadata",
+      }
+    );
+
+    props.table.grantReadData(getGalleryFunction);
+
+    const getGalleryFunctionUrl = getGalleryFunction.addFunctionUrl({
+      authType: lambda.FunctionUrlAuthType.NONE,
+      cors: {
+        allowedOrigins: ["*"],
+        allowedHeaders: ["Content-Type", "Authorization"],
+        allowedMethods: [lambda.HttpMethod.GET, lambda.HttpMethod.OPTIONS],
+        maxAge: cdk.Duration.hours(1),
+      },
+    });
+
+    // --- Albums API Lambda ---
+    const manageAlbumsFunction = new nodejs.NodejsFunction(
+      this,
+      "ManageAlbums",
+      {
+        ...sharedLambdaProps,
+        functionName: "snapvault-manage-albums",
+        entry: path.join(backendRoot, "src", "manage-albums", "index.ts"),
+        handler: "handler",
+        description: "Album CRUD and photo-album management",
+      }
+    );
+
+    props.table.grantReadWriteData(manageAlbumsFunction);
+
+    const manageAlbumsFunctionUrl = manageAlbumsFunction.addFunctionUrl({
+      authType: lambda.FunctionUrlAuthType.NONE,
+      cors: {
+        allowedOrigins: ["*"],
+        allowedHeaders: ["Content-Type", "Authorization"],
+        allowedMethods: [
+          lambda.HttpMethod.GET,
+          lambda.HttpMethod.POST,
+          lambda.HttpMethod.DELETE,
+          lambda.HttpMethod.OPTIONS,
+        ],
+        maxAge: cdk.Duration.hours(1),
+      },
+    });
+
     // Outputs
     new cdk.CfnOutput(this, "UploadUrlEndpoint", {
       value: this.getUploadUrlFunctionUrl.url,
       description: "Lambda Function URL for upload URL generation",
+    });
+
+    new cdk.CfnOutput(this, "GalleryEndpoint", {
+      value: getGalleryFunctionUrl.url,
+      description: "Lambda Function URL for gallery API",
+    });
+
+    new cdk.CfnOutput(this, "AlbumsEndpoint", {
+      value: manageAlbumsFunctionUrl.url,
+      description: "Lambda Function URL for albums API",
     });
   }
 }
