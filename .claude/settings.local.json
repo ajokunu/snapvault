@@ -3,7 +3,9 @@
     "allow": [
       "WebFetch(domain:www.anthropic.com)",
       "Bash(npx tsc:*)",
-      "Bash(npx cdk:*)"
+      "Bash(npx cdk:*)",
+      "Bash(find /c/Users/alindahl/.claude/plugins -name *image* -o -name *gen*)",
+      "Bash(gh repo:*)"
     ]
   }
 }

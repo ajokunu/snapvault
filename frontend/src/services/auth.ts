@@ -6,10 +6,13 @@ import {
 } from "amazon-cognito-identity-js";
 import { config } from "./config";
 
-const userPool = new CognitoUserPool({
-  UserPoolId: config.userPoolId,
-  ClientId: config.userPoolClientId,
-});
+const userPool =
+  config.userPoolId && config.userPoolClientId
+    ? new CognitoUserPool({
+        UserPoolId: config.userPoolId,
+        ClientId: config.userPoolClientId,
+      })
+    : null;
 
 // In-memory token storage (never localStorage)
 let currentSession: CognitoUserSession | null = null;
@@ -21,6 +24,9 @@ export interface AuthState {
 }
 
 export function getAuthState(): AuthState {
+  if (!userPool) {
+    return { isAuthenticated: false, email: null, userId: null };
+  }
   const user = userPool.getCurrentUser();
   if (!user || !currentSession || !currentSession.isValid()) {
     return { isAuthenticated: false, email: null, userId: null };
@@ -47,6 +53,9 @@ export async function signIn(
   email: string,
   password: string
 ): Promise<AuthState> {
+  if (!userPool) {
+    throw new Error("Auth not configured. Set VITE_USER_POOL_ID and VITE_USER_POOL_CLIENT_ID.");
+  }
   return new Promise((resolve, reject) => {
     const user = new CognitoUser({
       Username: email,
@@ -74,6 +83,7 @@ export async function signIn(
 }
 
 export async function refreshSession(): Promise<boolean> {
+  if (!userPool) return false;
   return new Promise((resolve) => {
     const user = userPool.getCurrentUser();
     if (!user) {
@@ -96,9 +106,11 @@ export async function refreshSession(): Promise<boolean> {
 }
 
 export function signOut(): void {
-  const user = userPool.getCurrentUser();
-  if (user) {
-    user.signOut();
+  if (userPool) {
+    const user = userPool.getCurrentUser();
+    if (user) {
+      user.signOut();
+    }
   }
   currentSession = null;
 }
